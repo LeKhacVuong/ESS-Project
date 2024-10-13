@@ -25,7 +25,9 @@ User/main_app.o: ../User/main_app.c ../User/main_app.h ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h \
- /home/lekhacvuong/STM32CubeIDE/workspace_1.14.0/project_heat/User/utils/sm_elapsed_timer.h
+ /home/lekhacvuong/Desktop/ESS-Project/User/service/io_sv/io_sv.h \
+ /home/lekhacvuong/Desktop/ESS-Project/User/service/adc_sv/adc_sv.h \
+ /home/lekhacvuong/Desktop/ESS-Project/User/utils/sm_elapsed_timer.h
 ../User/main_app.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -54,4 +56,6 @@ User/main_app.o: ../User/main_app.c ../User/main_app.h ../Core/Inc/main.h \
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pwr.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim_ex.h:
-/home/lekhacvuong/STM32CubeIDE/workspace_1.14.0/project_heat/User/utils/sm_elapsed_timer.h:
+/home/lekhacvuong/Desktop/ESS-Project/User/service/io_sv/io_sv.h:
+/home/lekhacvuong/Desktop/ESS-Project/User/service/adc_sv/adc_sv.h:
+/home/lekhacvuong/Desktop/ESS-Project/User/utils/sm_elapsed_timer.h:

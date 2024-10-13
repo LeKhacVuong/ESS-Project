@@ -1,3 +1,14 @@
-../User/main_app.c:22:9:get_tick_count	16	static
-../User/main_app.c:26:6:main_app	8	static
-../User/main_app.c:31:6:SysTick_Handler	8	static
+/home/lekhacvuong/Desktop/ESS-Project/User/utils/sm_elapsed_timer.h:28:20:elapsed_timer_reset	16	static
+/home/lekhacvuong/Desktop/ESS-Project/User/utils/sm_elapsed_timer.h:52:23:elapsed_timer_get_remain	32	static
+../User/main_app.c:19:9:get_tick_count	16	static
+../User/main_app.c:45:6:load_vol_lower_12v_filter	8	static
+../User/main_app.c:61:6:load_vol_upper_16v_filter	8	static
+../User/main_app.c:76:6:bank_a_vol_lower_16_filter	8	static
+../User/main_app.c:91:6:bank_b_vol_upper_4v_filter	8	static
+../User/main_app.c:106:6:load_vol_out_range_filter	16	static
+../User/main_app.c:128:6:charger_vol_out_range_filter	16	static
+../User/main_app.c:148:6:control_latch_relay_soc_led_and_status	8	static
+../User/main_app.c:169:6:control_charger_switch_soc_led_set_mode	8	static
+../User/main_app.c:185:6:monitor_load_charging_vol_set_warn_led	16	static
+../User/main_app.c:214:6:main_app	16	static
+../User/main_app.c:241:6:SysTick_Handler	8	static

@@ -10,6 +10,7 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include User/utils/subdir.mk
+-include User/service/io_sv/subdir.mk
 -include User/service/adc_sv/subdir.mk
 -include User/subdir.mk
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
@@ -55,6 +56,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 project_heat.list \
 
+OBJCOPY_HEX += \
+project_heat.hex \
+
 
 # All Target
 all: main-build
@@ -63,8 +67,8 @@ all: main-build
 main-build: project_heat.elf secondary-outputs
 
 # Tool invocations
-project_heat.elf project_heat.map: $(OBJS) $(USER_OBJS) /home/lekhacvuong/STM32CubeIDE/workspace_1.14.0/project_heat/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "project_heat.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/lekhacvuong/STM32CubeIDE/workspace_1.14.0/project_heat/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="project_heat.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+project_heat.elf project_heat.map: $(OBJS) $(USER_OBJS) /home/lekhacvuong/Desktop/ESS-Project/STM32F103C8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "project_heat.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/home/lekhacvuong/Desktop/ESS-Project/STM32F103C8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="project_heat.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -78,12 +82,17 @@ project_heat.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+project_heat.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "project_heat.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) default.size.stdout project_heat.elf project_heat.list project_heat.map
+	-$(RM) default.size.stdout project_heat.elf project_heat.hex project_heat.list project_heat.map
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

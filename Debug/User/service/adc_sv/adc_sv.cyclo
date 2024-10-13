@@ -1,0 +1,5 @@
+../User/service/adc_sv/adc_sv.c:24:9:adc_sv_init	1
+../User/service/adc_sv/adc_sv.c:30:10:adc_sv_get_load_vol	1
+../User/service/adc_sv/adc_sv.c:35:10:adc_sv_get_bank_a_vol	1
+../User/service/adc_sv/adc_sv.c:40:10:adc_sv_get_bank_b_vol	1
+../User/service/adc_sv/adc_sv.c:45:10:adc_sv_get_charger_vol	1

@@ -49,8 +49,6 @@ extern "C" {
 
 /* USER CODE END EM */
 
-void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
-
 /* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
@@ -97,8 +95,8 @@ void Error_Handler(void);
 #define CTRL_200A_FET_GPIO_Port GPIOA
 #define IN_UDV_BANK_A_Pin GPIO_PIN_12
 #define IN_UDV_BANK_A_GPIO_Port GPIOA
-#define LATCH_PWM_Pin GPIO_PIN_3
-#define LATCH_PWM_GPIO_Port GPIOB
+#define LATCH_PWMA_Pin GPIO_PIN_3
+#define LATCH_PWMA_GPIO_Port GPIOB
 #define LATCH_AIN2_Pin GPIO_PIN_4
 #define LATCH_AIN2_GPIO_Port GPIOB
 #define LATCH_STBY_Pin GPIO_PIN_5

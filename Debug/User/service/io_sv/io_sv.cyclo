@@ -1,0 +1,11 @@
+/home/lekhacvuong/Desktop/ESS-Project/User/utils/sm_elapsed_timer.h:28:20:elapsed_timer_reset	1
+/home/lekhacvuong/Desktop/ESS-Project/User/utils/sm_elapsed_timer.h:52:23:elapsed_timer_get_remain	3
+../User/service/io_sv/io_sv.c:15:9:io_sv_init	1
+../User/service/io_sv/io_sv.c:22:9:io_sv_set_val	16
+../User/service/io_sv/io_sv.c:77:9:io_sv_get_val	16
+../User/service/io_sv/io_sv.c:115:9:io_sv_ctrl_normal_charger	1
+../User/service/io_sv/io_sv.c:122:9:io_sv_ctrl_fast_charger	1
+../User/service/io_sv/io_sv.c:129:9:io_sv_set_led_status	5
+../User/service/io_sv/io_sv.c:153:9:io_sv_open_latch	1
+../User/service/io_sv/io_sv.c:165:9:io_sv_close_latch	1
+../User/service/io_sv/io_sv.c:176:9:io_sv_process	3

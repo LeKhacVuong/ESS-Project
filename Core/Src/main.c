@@ -247,7 +247,6 @@ static void MX_TIM2_Init(void)
 
   TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
-  TIM_OC_InitTypeDef sConfigOC = {0};
 
   /* USER CODE BEGIN TIM2_Init 1 */
 
@@ -267,28 +266,15 @@ static void MX_TIM2_Init(void)
   {
     Error_Handler();
   }
-  if (HAL_TIM_PWM_Init(&htim2) != HAL_OK)
-  {
-    Error_Handler();
-  }
   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
   if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 0;
-  sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
-  if (HAL_TIM_PWM_ConfigChannel(&htim2, &sConfigOC, TIM_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
   /* USER CODE BEGIN TIM2_Init 2 */
 
   /* USER CODE END TIM2_Init 2 */
-  HAL_TIM_MspPostInit(&htim2);
 
 }
 
@@ -330,8 +316,8 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, CTRL_LED_100_Pin|CTRL_LED_50_Pin|CTRL_LED_0_Pin|CTRL_LED_CHRGING_Pin
-                          |CTRL_LED_CHECK_CHRG_Pin|LATCH_AIN2_Pin|LATCH_STBY_Pin|CTRL_RELAY_EXT_Pin
-                          |CTRL_WARN_LED_Pin, GPIO_PIN_RESET);
+                          |CTRL_LED_CHECK_CHRG_Pin|LATCH_PWMA_Pin|LATCH_AIN2_Pin|LATCH_STBY_Pin
+                          |CTRL_RELAY_EXT_Pin|CTRL_WARN_LED_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, CTRL_FAST_CHG_FET_Pin|CTRL_100A_CHG_FET_Pin|CTRL_100A_FET_Pin|CTRL_200A_FET_Pin, GPIO_PIN_RESET);
@@ -356,11 +342,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(LATCH_AIN1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : CTRL_LED_100_Pin CTRL_LED_50_Pin CTRL_LED_0_Pin CTRL_LED_CHRGING_Pin
-                           CTRL_LED_CHECK_CHRG_Pin LATCH_AIN2_Pin LATCH_STBY_Pin CTRL_RELAY_EXT_Pin
-                           CTRL_WARN_LED_Pin */
+                           CTRL_LED_CHECK_CHRG_Pin LATCH_PWMA_Pin LATCH_AIN2_Pin LATCH_STBY_Pin
+                           CTRL_RELAY_EXT_Pin CTRL_WARN_LED_Pin */
   GPIO_InitStruct.Pin = CTRL_LED_100_Pin|CTRL_LED_50_Pin|CTRL_LED_0_Pin|CTRL_LED_CHRGING_Pin
-                          |CTRL_LED_CHECK_CHRG_Pin|LATCH_AIN2_Pin|LATCH_STBY_Pin|CTRL_RELAY_EXT_Pin
-                          |CTRL_WARN_LED_Pin;
+                          |CTRL_LED_CHECK_CHRG_Pin|LATCH_PWMA_Pin|LATCH_AIN2_Pin|LATCH_STBY_Pin
+                          |CTRL_RELAY_EXT_Pin|CTRL_WARN_LED_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

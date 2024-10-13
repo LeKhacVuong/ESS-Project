@@ -51,7 +51,7 @@ static inline void elapsed_timer_pass(elapsed_timer_t* _self){
  */
 static inline int32_t elapsed_timer_get_remain(elapsed_timer_t* _self){
     int32_t remain_time = get_tick_count() - _self->m_start_time;
-    if(remain_time >= _self->m_duration){
+    if(remain_time >= _self->m_duration || _self->m_start_time > get_tick_count()){
         return 0;
     }else{
         return _self->m_duration - remain_time;

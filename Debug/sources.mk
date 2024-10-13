@@ -10,6 +10,7 @@ C_SRCS :=
 S_UPPER_SRCS := 
 O_SRCS := 
 CYCLO_FILES := 
+OBJCOPY_HEX := 
 SIZE_OUTPUT := 
 OBJDUMP_LIST := 
 SU_FILES := 
@@ -27,5 +28,6 @@ Core/Startup \
 Drivers/STM32F1xx_HAL_Driver/Src \
 User \
 User/service/adc_sv \
+User/service/io_sv \
 User/utils \
 
