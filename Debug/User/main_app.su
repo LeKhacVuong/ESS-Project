@@ -1,0 +1,3 @@
+../User/main_app.c:22:9:get_tick_count	16	static
+../User/main_app.c:26:6:main_app	8	static
+../User/main_app.c:31:6:SysTick_Handler	8	static
