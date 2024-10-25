@@ -34,7 +34,7 @@ bool g_is_firt_time_under_12v = true;
 bool g_is_load_lower_12v;
 bool g_is_load_upper_16v;
 bool g_is_bank_a_lower_15_5v;
-bool g_is_bank_b_lower_4v;
+bool g_is_bank_b_lower_3v95;
 bool g_is_load_over_vol;
 bool g_is_load_under_vol;
 bool g_is_charger_over_vol;
@@ -45,7 +45,7 @@ bool g_is_charger_under_vol;
 void load_vol_lower_12v_filter(){
 	static uint32_t count = 0;
 
-	if(adc_sv_get_load_vol() <= 12000){
+	if(adc_sv_get_load_vol() <= 12000 /*&& io_sv_get_val(IO_STT_UDV_LOAD_MCU)*/){
 		count++;
 	}else{
 		g_is_load_lower_12v = 0;
@@ -61,7 +61,7 @@ void load_vol_lower_12v_filter(){
 void load_vol_upper_16v_filter(){
 	static uint32_t count = 0;
 
-	if(adc_sv_get_load_vol() >= 16000){
+	if(adc_sv_get_load_vol() >= 16000 /*&& io_sv_get_val(IO_STT_OV_LOAD_MCU)*/){
 		count++;
 	}else{
 		g_is_load_upper_16v = 0;
@@ -76,7 +76,7 @@ void load_vol_upper_16v_filter(){
 void bank_a_vol_lower_16_filter(){
 	static uint32_t count = 0;
 
-	if(adc_sv_get_bank_a_vol() <= 15500){
+	if(adc_sv_get_bank_a_vol() <= 15500 /*&& io_sv_get_val(IO_STT_UDV_BANK_A)*/){
 		count++;
 	}else{
 		g_is_bank_a_lower_15_5v = 0;
@@ -91,15 +91,15 @@ void bank_a_vol_lower_16_filter(){
 void bank_b_vol_upper_4v_filter(){
 	static uint32_t count = 0;
 
-	if(adc_sv_get_bank_b_vol() >= 3950){
+	if(adc_sv_get_bank_b_vol() >= 3950 /*&& io_sv_get_val(IO_STT_OV_BANK_B)*/){
 		count++;
 	}else{
 		count = 0;
-		g_is_bank_b_lower_4v = false;
+		g_is_bank_b_lower_3v95 = false;
 	}
 
 	if(count > FILTER_COUNT){
-		g_is_bank_b_lower_4v = true;
+		g_is_bank_b_lower_3v95 = true;
 	}
 }
 
@@ -118,8 +118,10 @@ void load_vol_out_range_filter(){
 	if(count > FILTER_COUNT){
 		if(load_vol <= 11500){
 			g_is_load_under_vol = true;
+			g_is_load_over_vol = false;
 		}else{
 			g_is_load_over_vol = true;
+			g_is_load_under_vol = false;
 		}
 	}
 }
@@ -129,7 +131,7 @@ void charger_vol_out_range_filter(){
 	static uint32_t count = 0;
 	uint32_t charger_vol = adc_sv_get_charger_vol();
 
-	if(charger_vol <= 12000 || charger_vol >= 20000){
+	if(charger_vol <= 12000 || charger_vol >= 19880){
 		count++;
 	}else{
 		count = 0;
@@ -140,13 +142,15 @@ void charger_vol_out_range_filter(){
 	if(count > FILTER_COUNT){
 		if(charger_vol <= 12000){
 			g_is_charger_under_vol = true;
+			g_is_charger_over_vol = false;
 		}else{
 			g_is_charger_over_vol = true;
+			g_is_charger_under_vol = false;
 		}
 	}
 }
 void control_latch_relay_soc_led_and_status(){
-	if(g_is_load_lower_12v){
+	if(g_is_load_upper_16v){
 		io_sv_open_latch();
 		io_sv_set_led_status(100);
 		g_mode = MODE_DISCH;
@@ -161,13 +165,12 @@ void control_latch_relay_soc_led_and_status(){
 			io_sv_close_latch();
 			io_sv_set_led_status(0);
 			io_sv_set_val(IO_CTRL_RELAY_EXT, 1);
-			io_sv_set_val(IO_CTRL_WARN_LED, 1);
 		}
 	}
 }
 
 void control_charger_switch_soc_led_set_mode(){
-	if(g_is_bank_b_lower_4v){
+	if(g_is_bank_b_lower_3v95){
 		if(g_is_bank_a_lower_15_5v){
 			io_sv_ctrl_normal_charger(0);
 			io_sv_ctrl_fast_charger(1);
@@ -184,11 +187,11 @@ void control_charger_switch_soc_led_set_mode(){
 
 void monitor_load_charging_vol_set_warn_led(){
 	uint8_t err = 0;
-	if(g_is_load_over_vol){
-		err = 1;
-		io_sv_ctrl_normal_charger(0);
-		io_sv_ctrl_fast_charger(0);
-	}
+//	if(g_is_load_over_vol){
+//		err = 1;
+//		io_sv_ctrl_normal_charger(0);
+//		io_sv_ctrl_fast_charger(0);
+//	}
 
 	if(g_is_charger_over_vol){
 		err = 1;
@@ -196,17 +199,17 @@ void monitor_load_charging_vol_set_warn_led(){
 		io_sv_ctrl_fast_charger(0);
 	}
 
-	if(g_is_load_under_vol){
-		err = 1;
-		io_sv_ctrl_normal_charger(1);
-		io_sv_ctrl_fast_charger(0);
-	}
-
-	if(g_is_charger_under_vol){
-		err = 1;
-		io_sv_ctrl_normal_charger(1);
-		io_sv_ctrl_fast_charger(0);
-	}
+//	if(g_is_load_under_vol){
+//		err = 1;
+//		io_sv_ctrl_normal_charger(1);
+//		io_sv_ctrl_fast_charger(0);
+//	}
+//
+//	if(g_is_charger_under_vol){
+//		err = 1;
+//		io_sv_ctrl_normal_charger(1);
+//		io_sv_ctrl_fast_charger(0);
+//	}
 
 	io_sv_set_val(IO_CTRL_WARN_LED, err);
 }
